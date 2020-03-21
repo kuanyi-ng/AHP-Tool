@@ -40,42 +40,68 @@ inputButton.onclick = () => {
   mainElem.appendChild(htmlToElement(choicesSection));
 
   inputButton.onclick = () => {
-    console.log('input updated');
+    updateComparisonSection();
   };
 
-  console.log('done adding DOM');
+  updateComparisonSection();
 };
-
-// function firstInput() {
-//   // add "Comparison Between Criterion" Section
-//   const criterionSection = sectionTemplate({'caption': 'Comparison between Criterion'});
-//   mainElem.innerHTML += criterionSection;
-//
-//   // add Divider
-//   mainElem.innerHTML += "<div class=\"divider\"></div>";
-//
-//   // add "Comparison Between Choices" Section
-//   const choicesSection = sectionTemplate({'caption': 'Comparison between Choices'});
-//   mainElem.innerHTML += choicesSection;
-//
-//   inputButton.onclick = updateInput;
-//
-//   console.log('done adding DOM');
-// }
-
-// When inputButton is clicked again
-// function updateInput() {
-// }
 
 function getChipsData(elem) {
   // return text in each chip in a list
   return M.Chips.getInstance(elem).chipsData.map(chip => chip.tag);
 }
 
-function addChoice() {
+function combinations(arr, r) {
 
 }
 
-function addCriteria() {
+function combinationUtil(l, r, result=[]) {
+  // Generate an Array of (Array of indexes)
+  // which is used to produce combination
+  if (result.length === 0) {
+    // add first combination
+    let first = [];
+    for (let i = 0; i < r; i++) {
+      first.push(i);
+    }
+    result.push(first);
+    return experiment(l, r, result);
+  }
 
+  // get the previous combination
+  let previous = result[result.length-1].slice();
+  // last combination generated
+  if (previous[0] === (l-r)) {
+    return result;
+  }
+  // generate the next combination based on previous
+  let maxAtEachIndex = [];
+  for (let i = 0; i < r; i++) {
+    maxAtEachIndex.push(l-r+i);
+  }
+  for (let checkIndex = r-1; checkIndex >= 0; checkIndex--) {
+    // if value at checkIndex is not at its max (this is the next combination)
+    if (previous[checkIndex] != l-r+checkIndex) {
+      let temp = previous.slice(); // copy
+      // increment the value at checkIndex
+      temp[checkIndex] = previous[checkIndex] + 1;
+      // fill in the rest in ascending order
+      for (let fillIndex = checkIndex+1; fillIndex < r; fillIndex++) {
+        temp[fillIndex] = temp[fillIndex-1] + 1;
+      }
+      // add to result
+      result.push(temp);
+      return experiment(l, r, result);
+    }
+  }
+}
+
+function updateComparisonSection() {
+  // get Choices
+  let choices = getChipsData(choiceChips);
+  // get Criterion
+  let criterion = getChipsData(criteriaChips);
+  // create Range
+  console.log(choices);
+  console.log(criterion);
 }
