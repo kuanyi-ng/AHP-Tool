@@ -12,9 +12,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   <body>
+    <main class="container">
+      <h1 class="center-align">AHP Tool</h1>
+
+      <!-- Purpose -->
+      <div class="section">
+        <div class="input-field col s12">
+          <p class="caption">Purpose:</p>
+          <input id="purpose" type="text" class="validate" placeholder="What's the purpose?">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Alternatives (Choices) -->
+      <div class="section">
+        <p class="caption">Choice(s): <span>(more than 1)</span></p>
+        <div id="alternatives" class="chips chips-placeholder"></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Criteria -->
+      <div class="section">
+        <p class="caption">Criterion: <span>(more than 1)</span></p>
+        <div id="criterion" class="chips chips-placeholder"></div>
+      </div>
+
+      <a id="input-btn" class="waves-effect waves-light btn"><i class="material-icons">navigate_next</i></a>
+
+    </main>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="js/materialize.js" charset="utf-8"></script>
+    <!-- Include Handlebars from a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <script src="js/main.js" charset="utf-8"></script>
+    <script src="js/materialize.js" charset="utf-8"></script>
   </body>
 </html>
