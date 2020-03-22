@@ -144,6 +144,15 @@ function simulateResult() {
     }
   }
 
-  console.log(criteriaCMatrix);
-  console.log(choiceCMatrix);
+  // calculate the Weight of each Criteria
+  let criteriaWeight = groupImportance(groupGeometricMean(criteriaCMatrix));
+
+  // calculate the Rating of each Choice based on each Criteria
+  let choiceWeight = {};
+  for (let criteria of criterion) {
+    choiceWeight[criteria] = groupImportance(groupGeometricMean(choiceCMatrix[criteria]));
+  }
+
+  console.log(criteriaWeight);
+  console.log(choiceWeight);
 }

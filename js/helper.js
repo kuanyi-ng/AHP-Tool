@@ -94,32 +94,6 @@ function combinationUtil(l, r, result=[]) {
   }
 }
 
-function geometricMean(arr) {
-  if (arr.length === 0) {
-    return;
-  }
-
-  let total = arr[0];
-  for (let i = 1; i < arr.length; i++) {
-    total *= arr[i];
-  }
-
-  return Math.pow(total, 1/arr.length);
-}
-
-function percentageAmong(n, arr) {
-  if ((arr.length === 0) | (arr.indexOf(n) === -1)) {
-    return;
-  }
-
-  let total = arr[0];
-  for (let i = 1; i < arr.length; i++) {
-    total += arr[i];
-  }
-
-  return n / total;
-}
-
 function makeComparisonMatrix(arr) {
   let compareMatrix = {};
   for (let idx of arr) {
@@ -141,4 +115,53 @@ function updateComparisonMatrix(cm, combo, val) {
   cm[idx][col] = val;
   cm[col][idx] = 1/val;
   return cm;
+}
+
+function geometricMean(partial_cMatrix) {
+  let arr = [];
+
+  // obtain value from <object> partial_cMatrix
+  for (const key in partial_cMatrix) {
+    arr.push(partial_cMatrix[key]);
+  }
+
+  if (arr.length === 0) {
+    return;
+  }
+
+  let total = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    total *= arr[i];
+  }
+
+  return Math.pow(total, 1/arr.length);
+}
+
+function groupGeometricMean(cMatrix) {
+  let gGeoMean = {};
+  // calculate the geometric mean for each key in cMatrix
+  for (const key in cMatrix) {
+    let partialCMatrix = cMatrix[key];
+    gGeoMean[key] = geometricMean(partialCMatrix);
+  }
+
+  return gGeoMean;
+}
+
+function importance(k, groupGeoMean) {
+  let total = 0;
+  for (const key in groupGeoMean) {
+    total += groupGeoMean[key];
+  }
+
+  return groupGeoMean[k] / total;
+}
+
+function groupImportance(groupGeoMean) {
+  let groupImportance = {};
+  for (const key in groupGeoMean) {
+    groupImportance[key] = importance(key, groupGeoMean);
+  }
+
+  return groupImportance;
 }
