@@ -2,7 +2,10 @@ const mainElem = document.querySelector('main');
 const choiceChips = document.getElementById('choices-input');
 const criteriaChips = document.getElementById('criterion-input');
 const inputButton = document.getElementById('input-btn');
+let calButton;
 
+let choices;
+let criterion;
 let criteriaCombo;
 let choiceCombo;
 
@@ -16,7 +19,7 @@ const rangeTemplate = Handlebars.compile(`
   <div class="row range-row">
     <span class="col s3 center-align">{{ left }}</span>
     <span class="range-field col s6">
-      <input id="{{ id }}" type="range" min="-9" max="9" step="1"/>
+      <input id="{{ id }}" type="range" min="0" max="16" step="1"/>
     </span>
     <span class="col s3 center-align">{{ right }}</span>
   </div>
@@ -41,19 +44,28 @@ inputButton.onclick = () => {
   }));
   mainElem.appendChild(choicesSection);
 
+  // add Button
+  mainElem.appendChild(htmlToElement("<a id=\"cal-btn\" class=\"waves-effect waves-light btn\"><i class=\"material-icons\">navigate_next</i></a>"));
+  calButton = document.getElementById('cal-btn');
+
   updateComparisonSection();
 
   // when inputButton is clicked again
   inputButton.onclick = () => {
     updateComparisonSection();
   };
+
+  // when calButton is clicked
+  calButton.onclick = () => {
+    simulateResult();
+  };
 };
 
 function updateComparisonSection() {
   // get Choices
-  let choices = getChipsData(choiceChips);
+  choices = getChipsData(choiceChips);
   // get Criterion
-  let criterion = getChipsData(criteriaChips);
+  criterion = getChipsData(criteriaChips);
 
   // empty inputs
   if ((choices.length === 0) || (criterion.length === 0)) {
@@ -104,6 +116,34 @@ function updateComparisonSection() {
     }
   }
 
-  // initialize the ranges that are newly added
-  M.Range.init(document.querySelectorAll("input[type=range]"));
+  // don't initialize the ranges that are newly added to avoid confusion (no ballon showing value)
+  // M.Range.init(document.querySelectorAll("input[type=range]"));
+}
+
+function simulateResult() {
+  // Initialize Comparison Matrix for Weight of each Criteria
+  let criteriaCMatrix = makeComparisonMatrix(criterion);
+  // Initialize Comparison Matrix for Comparison of each Choice
+  let choiceCMatrix = {}
+  for (let criteria of criterion) {
+    choiceCMatrix[criteria] = makeComparisonMatrix(choices);
+  }
+
+  // get value from Range and update CMatrix
+  // Weight of each Criteria
+  for (let cCombo of criteriaCombo) {
+    let val = getComparisonValue("criteria", cCombo);
+    criteriaCMatrix = updateComparisonMatrix(criteriaCMatrix, cCombo, val);
+  }
+
+  // Comparison of Each Choice
+  for (let criteria of criterion) {
+    for (let aCombo of choiceCombo) {
+      let val = getComparisonValue("choice", aCombo, criteria);
+      choiceCMatrix[criteria] = updateComparisonMatrix(choiceCMatrix[criteria], aCombo, val);
+    }
+  }
+
+  console.log(criteriaCMatrix);
+  console.log(choiceCMatrix);
 }

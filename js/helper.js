@@ -1,3 +1,5 @@
+const comparisonValue = [9, 8, 7, 6, 5, 4, 3, 2, 1, 1/2, 1/3, 1/4, 1/5, 1/6, 1/7, 1/8, 1/9];
+
 function htmlToElement(html) {
     let template = document.createElement('template');
     html = html.trim(); // Never return a text node of whitespace as the result
@@ -8,6 +10,40 @@ function htmlToElement(html) {
 function getChipsData(elem) {
   // return text in each chip in a list
   return M.Chips.getInstance(elem).chipsData.map(chip => chip.tag);
+}
+
+function getRangeId(type, combo, c=null) {
+  let left;
+  let right;
+  if (type === "criteria") {
+    left = criterion.indexOf(combo[0]);
+    right = criterion.indexOf(combo[1]);
+    return `c-${left}-${right}`;
+  } else if (type === "choice") {
+    if (!c) { return; }
+
+    let cIdx = criterion.indexOf(c);
+    left = choices.indexOf(combo[0]);
+    right = choices.indexOf(combo[1]);
+    return `c-${cIdx}-a-${left}-${right}`;
+  } else {
+    return;
+  }
+}
+
+function getRangeValue(type, combo, c=null) {
+  let id = getRangeId(type, combo, c);
+  return document.getElementById(id).value;
+}
+
+function getComparisonValue(type, combo, c=null) {
+  let validType = ["criteria", "choice"];
+  if (validType.indexOf(type) === -1) {
+    return;
+  }
+
+  let rangeVal = getRangeValue(type, combo, c);
+  return comparisonValue[rangeVal];
 }
 
 function combinations(arr, r) {
@@ -56,4 +92,53 @@ function combinationUtil(l, r, result=[]) {
       return combinationUtil(l, r, result);
     }
   }
+}
+
+function geometricMean(arr) {
+  if (arr.length === 0) {
+    return;
+  }
+
+  let total = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    total *= arr[i];
+  }
+
+  return Math.pow(total, 1/arr.length);
+}
+
+function percentageAmong(n, arr) {
+  if ((arr.length === 0) | (arr.indexOf(n) === -1)) {
+    return;
+  }
+
+  let total = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    total += arr[i];
+  }
+
+  return n / total;
+}
+
+function makeComparisonMatrix(arr) {
+  let compareMatrix = {};
+  for (let idx of arr) {
+    compareMatrix[idx] = {};
+    for (let col of arr) {
+      if (idx === col) {
+        compareMatrix[idx][col] = 1;
+      } else {
+        compareMatrix[idx][col] = null;
+      }
+    }
+  }
+  return compareMatrix;
+}
+
+function updateComparisonMatrix(cm, combo, val) {
+  let idx = combo[0];
+  let col = combo[1];
+  cm[idx][col] = val;
+  cm[col][idx] = 1/val;
+  return cm;
 }
