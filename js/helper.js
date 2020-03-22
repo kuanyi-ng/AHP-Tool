@@ -165,3 +165,13 @@ function groupImportance(groupGeoMean) {
 
   return groupImportance;
 }
+
+function choiceScore(choice, choiceWeight, criteriaWeight) {
+  // calculate the score of a choice
+  let score = {};
+  for (const criteria in criteriaWeight) {
+    score[criteria] = choiceWeight[criteria][choice] * criteriaWeight[criteria];
+  }
+
+  return score;
+}

@@ -155,4 +155,21 @@ function simulateResult() {
 
   console.log(criteriaWeight);
   console.log(choiceWeight);
+
+  let finalScore = {};
+  for (let choice of choices) {
+    finalScore[choice] = choiceScore(choice, choiceWeight, criteriaWeight);
+  }
+
+  console.log(finalScore);
+
+  // display result
+  showResult({
+    "weight": criteriaWeight,
+    "score": finalScore
+  });
+}
+
+function showResult(d) {
+
 }
