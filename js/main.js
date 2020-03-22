@@ -25,6 +25,10 @@ const rangeTemplate = Handlebars.compile(`
   </div>
 `);
 
+const canvasTemplate = Handlebars.compile(`
+  <canvas id="{{ id }}"></canvas>
+`);
+
 // The first time inputButton is clicked
 inputButton.onclick = () => {
   // add "Comparison Between Criterion" Section
@@ -171,5 +175,7 @@ function simulateResult() {
 }
 
 function showResult(d) {
-
+  const criteriaWeightCanvas = htmlToElement(canvasTemplate({"id": "weight"}));
+  mainElem.appendChild(criteriaWeightCanvas);
+  criteriaWeightBar("weight", d.weight);
 }
