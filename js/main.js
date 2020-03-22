@@ -82,6 +82,10 @@ function updateComparisonSection() {
   const criterionSection = document.getElementById('criterion');
   const choicesSection = document.getElementById('choices');
 
+  // reset Section if there's elements within
+  resetSection(criterionSection);
+  resetSection(choicesSection);
+
   // create Reference
   const criterionReference = htmlToElement(rangeTemplate({
     'left': 'Left is more Important',
@@ -124,6 +128,14 @@ function updateComparisonSection() {
 
   // don't initialize the ranges that are newly added to avoid confusion (no ballon showing value)
   // M.Range.init(document.querySelectorAll("input[type=range]"));
+}
+
+function resetSection(sectionElem) {
+  let toRemove = sectionElem.childNodes.length - 3;
+  // don't count "Comparison" section
+  for (let i = 0; i < toRemove; i++) {
+    sectionElem.removeChild(sectionElem.lastElementChild);
+  }
 }
 
 function simulateResult() {
