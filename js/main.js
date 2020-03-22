@@ -26,7 +26,9 @@ const rangeTemplate = Handlebars.compile(`
 `);
 
 const canvasTemplate = Handlebars.compile(`
-  <canvas id="{{ id }}"></canvas>
+  <div style="position: relative; height:40%; width:80%; margin: 0 auto;">
+    <canvas id="{{ id }}"></canvas>
+  </div>
 `);
 
 // The first time inputButton is clicked
@@ -175,7 +177,14 @@ function simulateResult() {
 }
 
 function showResult(d) {
+  const chartDiv = htmlToElement("<div class=\"row\"></div>");
+  mainElem.appendChild(chartDiv);
+
   const criteriaWeightCanvas = htmlToElement(canvasTemplate({"id": "weight"}));
-  mainElem.appendChild(criteriaWeightCanvas);
+  chartDiv.appendChild(criteriaWeightCanvas);
   criteriaWeightBar("weight", d.weight);
+
+  const scoreCanvas = htmlToElement(canvasTemplate({"id": "score"}));
+  chartDiv.appendChild(scoreCanvas);
+  choiceScoreBar("score", choices, d.score, criterion);
 }
