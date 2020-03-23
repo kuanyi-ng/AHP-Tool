@@ -9,28 +9,6 @@ let criterion;
 let criteriaCombo;
 let choiceCombo;
 
-const sectionTemplate = Handlebars.compile(`
-  <div id="{{ id }}" class="section">
-    <p class="caption">{{ caption }}</p>
-  </div>
-`);
-
-const rangeTemplate = Handlebars.compile(`
-  <div class="row range-row">
-    <span class="col s3 center-align">{{ left }}</span>
-    <span class="range-field col s6">
-      <input id="{{ id }}" type="range" min="0" max="16" step="1"/>
-    </span>
-    <span class="col s3 center-align">{{ right }}</span>
-  </div>
-`);
-
-const canvasTemplate = Handlebars.compile(`
-  <div style="position: relative; height:40%; width:80%; margin: 0 auto;">
-    <canvas id="{{ id }}"></canvas>
-  </div>
-`);
-
 // The first time inputButton is clicked
 inputButton.onclick = () => {
   // add "Comparison Between Criterion" Section
@@ -41,7 +19,7 @@ inputButton.onclick = () => {
   mainElem.appendChild(criterionSection);
 
   // add Divider
-  mainElem.appendChild(htmlToElement("<div class=\"divider\"></div>"));
+  mainElem.appendChild(htmlToElement(divider()));
 
   // add "Comparison Between Choices" Section
   const choicesSection = htmlToElement(sectionTemplate({
@@ -51,7 +29,7 @@ inputButton.onclick = () => {
   mainElem.appendChild(choicesSection);
 
   // add Button
-  mainElem.appendChild(htmlToElement("<a id=\"cal-btn\" class=\"waves-effect waves-light btn\"><i class=\"material-icons\">navigate_next</i></a>"));
+  mainElem.appendChild(htmlToElement(showResultButton()));
   calButton = document.getElementById('cal-btn');
 
   updateComparisonSection();
@@ -87,11 +65,11 @@ function updateComparisonSection() {
   resetSection(choicesSection);
 
   // create Reference
-  const criterionReference = htmlToElement(rangeTemplate({
+  const criterionReference = htmlToElement(referenceRangeTemplate({
     'left': 'Left is more Important',
     'right': 'Right is more Important'
   }));
-  const choicesReference = htmlToElement(rangeTemplate({
+  const choicesReference = htmlToElement(referenceRangeTemplate({
     'left': 'Left is Better',
     'right': 'Right is Better'
   }));
@@ -99,7 +77,7 @@ function updateComparisonSection() {
   // create Range for Comparison between each Criteria
   criteriaCombo = combinations(criterion, 2);
 
-  criterionSection.appendChild(htmlToElement("<p class=\"caption\">Reference: </p>"));
+  criterionSection.appendChild(htmlToElement(referenceText()));
   criterionSection.appendChild(criterionReference);
   for (let combo of criteriaCombo) {
     let cleft = criterion.indexOf(combo[0]);
@@ -112,10 +90,10 @@ function updateComparisonSection() {
   // create Range for Comparison between each Choices
   choiceCombo = combinations(choices, 2);
 
-  choicesSection.appendChild(htmlToElement("<p class=\"caption\">Reference: </p>"));
+  choicesSection.appendChild(htmlToElement(referenceText()));
   choicesSection.appendChild(choicesReference);
   for (let c of criterion) {
-    choicesSection.appendChild(htmlToElement(`<p class="caption">${c}</p>`));
+    choicesSection.appendChild(htmlToElement(`<p class="sub-caption">Based on ${c}</p>`));
     for (let combo of choiceCombo) {
       let cIdx = criterion.indexOf(c);
       let aleft = choices.indexOf(combo[0]);

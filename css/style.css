@@ -3,3 +3,15 @@
   flex-direction: row;
   align-items: center;
 }
+
+.btn {
+  background-color: #00bfa5;
+}
+
+p.caption {
+  font-size: 1.5rem;
+}
+
+p.sub-caption {
+  font-size: 1.25rem;
+}

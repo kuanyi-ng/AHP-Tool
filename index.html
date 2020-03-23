@@ -12,8 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   <body>
-    <main class="container">
-      <h1 class="center-align">AHP Tool</h1>
+      <header class="center-align teal accent-4 white-text" style="padding: 2rem;">
+        <h1 style="margin: 0;">AHP Tool</h1>
+      </header>
+      <main class="container">
 
       <!-- Purpose -->
       <div class="row" style="margin-bottom: 0;">
@@ -27,7 +29,7 @@
 
       <!-- Alternatives (Choices) -->
       <div class="row">
-      <div class="section col s12 m6 b6">
+      <div class="section col s12 m6">
         <p class="caption">Choice(s): <span>(more than 1)</span></p>
         <div id="choices-input" class="chips chips-placeholder"></div>
       </div>
@@ -35,13 +37,15 @@
       <!-- <div class="divider"></div> -->
 
       <!-- Criteria -->
-      <div class="section col s12 m6 b6">
+      <div class="section col s12 m6">
         <p class="caption">Criterion: <span>(more than 1)</span></p>
         <div id="criterion-input" class="chips chips-placeholder"></div>
       </div>
     </div>
 
-      <a id="input-btn" class="waves-effect waves-light btn"><i class="material-icons">navigate_next</i></a>
+    <div class="row center-align">
+      <a id="input-btn" class="waves-effect waves-light btn"><i class="material-icons">expand_more</i></a>
+    </div>
 
     </main>
     <!-- Compiled and minified JavaScript -->
@@ -51,6 +55,7 @@
     <script src="js/main.js" charset="utf-8"></script>
     <script src="js/helper.js" charset="utf-8"></script>
     <script src="js/materialize.js" charset="utf-8"></script>
+    <script src="js/template.js" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <!-- Source: https://github.com/google/palette.js -->
     <script src="js/palette.js" charset="utf-8"></script>

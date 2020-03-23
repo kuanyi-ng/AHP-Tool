@@ -14,8 +14,8 @@ function criteriaWeightBar(canvas_id, criteriaWeight) {
         labels: x,
         datasets: [{
             data: y,
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(75, 192, 192)',
+            borderColor: 'rgb(75, 192, 192)',
         }]
       },
       options: {
@@ -31,7 +31,7 @@ function criteriaWeightBar(canvas_id, criteriaWeight) {
               ticks: {
                   beginAtZero:true,
                   min: 0,
-                  max: 1
+                  // max: 1
               }
           }]
         }
@@ -40,7 +40,12 @@ function criteriaWeightBar(canvas_id, criteriaWeight) {
 }
 
 function choiceScoreBar(canvas_id, choices, finalScore, criterion) {
-  let colors = palette('tol-rainbow', criterion.length).map(color => `#${color}`);
+  let colors;
+  if (criterion.length > 9) {
+    colors = palette('tol-rainbow', criterion.length).map(color => `#${color}`);
+  } else {
+    colors = palette('cb-BuGn', criterion.length).map(color => `#${color}`);
+  }
 
   let datasets = [];
 
@@ -70,7 +75,7 @@ function choiceScoreBar(canvas_id, choices, finalScore, criterion) {
     options: {
       title: {
         display: true,
-        text: 'Importance of each Criteria'
+        text: 'Score of each Choice'
       },
       scales: {
         xAxes: [{
@@ -80,7 +85,7 @@ function choiceScoreBar(canvas_id, choices, finalScore, criterion) {
           ticks: {
             beginAtZero: true,
             min: 0,
-            max: 1,
+            // max: 1,
           },
           stacked: true
         }]
