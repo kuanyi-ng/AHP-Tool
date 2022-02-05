@@ -8,12 +8,23 @@
   flex-direction: row;
   align-items: center;
 }
+.range-row input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--theme-color);
+  cursor: pointer;
+}
+/* For Mozilla */
+.range-row input[type="range"]::-moz-range-thumb {
+  background: var(--theme-color);
+  cursor: pointer;
+}
 
 .btn {
   background-color: var(--theme-color);
 }
 .btn:hover {
-    background-color: var(--hover-color);
+  background-color: var(--hover-color);
 }
 
 p.caption {
