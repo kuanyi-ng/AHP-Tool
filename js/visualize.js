@@ -14,8 +14,9 @@ function criteriaWeightBar(canvas_id, criteriaWeight) {
         labels: x,
         datasets: [{
             data: y,
-            backgroundColor: 'rgb(75, 192, 192)',
-            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(33, 33, 33, 0.2)',
+            borderColor: 'rgb(33, 33, 33)',
+            borderWidth: 1,
         }]
       },
       options: {
