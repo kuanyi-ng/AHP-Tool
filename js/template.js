@@ -36,7 +36,7 @@ const canvasTemplate = Handlebars.compile(`
 
 const showResultButton = Handlebars.compile(`
   <div class="row center-align">
-    <a id="cal-btn" class="waves-effect waves-light btn">
+    <a id="cal-btn" class="waves-effect btn">
       <i class="material-icons">assessment</i>
       <span style="display: inline-block; transform: translateY(-4px);">
         Show Result
