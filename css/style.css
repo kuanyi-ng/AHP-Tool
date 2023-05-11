@@ -1,30 +1,11 @@
-:root {
-  --theme-color: #212121;
-  --hover-color: #424242;
-}
-
 .range-row {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.range-row input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  background: var(--theme-color);
-  cursor: pointer;
-}
-/* For Mozilla */
-.range-row input[type="range"]::-moz-range-thumb {
-  background: var(--theme-color);
-  cursor: pointer;
-}
 
 .btn {
-  background-color: var(--theme-color);
-}
-.btn:hover {
-  background-color: var(--hover-color);
+  background-color: #00bfa5;
 }
 
 p.caption {
@@ -33,32 +14,4 @@ p.caption {
 
 p.sub-caption {
   font-size: 1.25rem;
-}
-
-/* label color */
-.input-field label {
-  color: var(--theme-color);
-}
-/* label focus color */
-.input-field input[type="text"]:focus + label {
-  color: var(--theme-color);
-}
-/* label underline focus color */
-.input-field input[type="text"]:focus {
-  border-bottom: 1px solid var(--theme-color) !important;
-  box-shadow: 0 1px 0 0 var(--theme-color) !important;
-}
-/* valid color */
-.input-field input[type="text"].valid {
-  border-bottom: 1px solid var(--theme-color);
-  box-shadow: 0 1px 0 0 var(--theme-color);
-}
-/* invalid color */
-.input-field input[type="text"].invalid {
-  border-bottom: 1px solid #f00;
-  box-shadow: 0 1px 0 0 #f00;
-}
-/* icon prefix focus color */
-.input-field .prefix.active {
-  color: var(--theme-color);
 }
